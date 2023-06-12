@@ -6,11 +6,12 @@ import Layout from './components/Layout';
 import IndexPage from './Pages/Indexpage';
 import Loginpage from './Pages/Loginpage';
 import Registerpage from './Pages/Registerpage';
-
+import { UserContextProvider } from './UserContext';
 
 function App() {
   return (
-    <React.Fragment>
+    <UserContextProvider>
+      <React.Fragment>
         <main>
           <Layout/>
           <Routes>
@@ -20,6 +21,7 @@ function App() {
           </Routes>
         </main>
       </React.Fragment>
+    </UserContextProvider>
   );
 }
 

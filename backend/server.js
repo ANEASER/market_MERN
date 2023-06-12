@@ -4,11 +4,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors')
-
+const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(cors({credentials:true, origin:'http://localhost:3000'})); 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 const URL = process.env.MONGODB_URL;
