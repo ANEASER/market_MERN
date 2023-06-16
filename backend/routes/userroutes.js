@@ -10,7 +10,7 @@ router.get("/profile",userControllers.UserProfile);
 router.get("/logout", userControllers.Logout);
 
 
-router.get('/verifyOTP',userControllers.verifyOTP);
+router.post('/verifyOTP',userControllers.verifyOTP);
 router.get('/createresetsession',userControllers.createResetSession);
 
 //router.route('/resetpassword').put(userControllers.verifyUser, userControllers.resetPassword);

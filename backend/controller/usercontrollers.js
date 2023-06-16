@@ -91,13 +91,15 @@ const verifyUser = async (req, res, next) => {
 
 // Verify OTP
 const verifyOTP = async (req, res) => {
-  const { code } = req.query;
+  const { otp } = req.body;
   
   console.log(req.app.locals.OTP);
+  console.log(otp);
 
-  if (parseInt(req.app.locals.OTP) === parseInt(code)) {
+  if (parseInt(req.app.locals.OTP) === parseInt(otp)) {
     req.app.locals.OTP = null;
     req.app.locals.resetSession = true;
+    console.log('Verify Successfully');
     return res.status(201).send({ msg: 'Verify Successfully' });
   }
 

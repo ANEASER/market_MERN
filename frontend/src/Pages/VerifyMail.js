@@ -8,16 +8,22 @@ export default function VerifyMail() {
 
   async function verifymail(e){
     e.preventDefault();
-    fetch('http://localhost:4000/market/user/verifyOTP',{
+    const response = await fetch('http://localhost:4000/market/user/verifyOTP',{
             method:'POST',
             body:JSON.stringify({otp}),
             headers:{'Content-Type' : 'application/json'},
           });
-          setRedirect(true);
+
+          if (response.status === 201 ){
+            setRedirect(true);
+          } else {
+            alert ('OTP code is wrong');
+          }
+
     } 
 
   if (redirect) {
-    return <Navigate to={'/'} />
+    return <Navigate to={'/login'} />
   }
 
 
