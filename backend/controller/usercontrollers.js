@@ -89,21 +89,11 @@ const verifyUser = async (req, res, next) => {
 
 
 
-//genarate OTP
-// npm install otp-generator
-const generateOTP = async (req, res) => {
-  req.app.locals.OTP = await otpGenerator.generate(6, {lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false});
-  //console.log(req.app.locals.OTP);
-  res.status(201).send({ code: req.app.locals.OTP });
-  
-}
-
 // Verify OTP
 const verifyOTP = async (req, res) => {
   const { code } = req.query;
   
-  //console.log(req.body);
-  //console.log(req.app.locals.OTP);
+  console.log(req.app.locals.OTP);
 
   if (parseInt(req.app.locals.OTP) === parseInt(code)) {
     req.app.locals.OTP = null;
@@ -155,7 +145,6 @@ exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.UserProfile = UserProfile;
 exports.Logout = Logout;
-exports.generateOTP =generateOTP;
 exports.verifyOTP = verifyOTP;
 exports.verifyUser = verifyUser;
 exports.createResetSession = createResetSession;

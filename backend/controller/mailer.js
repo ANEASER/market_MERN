@@ -1,54 +1,54 @@
-// npm install nodemailer
-// npm install Mailgen 
-
-require('dotenv').config(); 
+require('dotenv').config();
 const nodemailer = require('nodemailer');
-//const Mailgen = require('mailgen');
+const otpGenerator = require('otp-generator');
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-       user: process.env.EMAIL,
-       pass: process.env.PASSWORD   // we need to setup google account settings to 2 step verifications then app password
-    },
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
 
-    tls: {
-        rejectUnauthorized: false
-    }
- });
+const generateOTP = () => {
+  return otpGenerator.generate(6, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false
+  });
+};
 
 const registerMail = async (req, res) => {
-    const { username, userEmail, text, subject } = req.body;
+  const { username, email } = req.body;
 
-    // body of the email
-    var email = {
-        body : {
-            name: username,
-            intro : text || 'Welcome to Daily Tuition! We\'re very excited to have you on board.',
-            outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
-        }
-    }
+  const otp = generateOTP();
+  console.log(otp);
+  req.app.locals.OTP = otp  // save the otp in the middlewhere
 
-    
-    const mailOptions = {
-        from: process.env.EMAIL,
-        to: userEmail,
-        subject: subject,
-        html: "Test <button>sending</button> Gmail using Node JS"
-     };
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Registration Email",
+    html: `
+      <h2>Registration Email</h2>
+      <p>Hello ${username},</p>
+      <p>Your One-Time Password (OTP) is: <strong>${otp}</strong></p>
+      <p>If you have any questions or need assistance, feel free to reply to this email.</p>
+      <p>Thank you!</p>
+    `
+  };
 
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    res.json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'An error occurred while sending the email' });
+  }
+};
 
-
-    // send mail
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-           console.log(error);
-        }else{
-           console.log("Email sent: " + info.response);
-        }
-     });
-     
-
-}
-
-exports.registerMail = registerMail;
+module.exports = { generateOTP, registerMail };

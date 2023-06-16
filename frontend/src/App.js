@@ -6,7 +6,10 @@ import Layout from './components/Layout';
 import IndexPage from './Pages/Indexpage';
 import Loginpage from './Pages/Loginpage';
 import Registerpage from './Pages/Registerpage';
+import VerifyMail from './Pages/VerifyMail';
+
 import { UserContextProvider } from './UserContext';
+
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
               <Route index element={<IndexPage/>} />
               <Route path="/login" element={<Loginpage/>}/>
               <Route path="/register" element={<Registerpage/>}/>
+              <Route path="/verifymail" element={<VerifyMail/>}/>
           </Routes>
         </main>
       </React.Fragment>
