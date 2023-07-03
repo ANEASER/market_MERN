@@ -7,6 +7,7 @@ import IndexPage from './Pages/Indexpage';
 import Loginpage from './Pages/Loginpage';
 import Registerpage from './Pages/Registerpage';
 import VerifyMail from './Pages/VerifyMail';
+import CreateGig from './Pages/Market/PostGig'; 
 
 import { UserContextProvider } from './UserContext';
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/login" element={<Loginpage/>}/>
               <Route path="/register" element={<Registerpage/>}/>
               <Route path="/verifymail" element={<VerifyMail/>}/>
+              <Route path="/creategig" element={<CreateGig/>}/>
           </Routes>
         </main>
       </React.Fragment>
