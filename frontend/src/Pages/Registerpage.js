@@ -19,6 +19,11 @@ export default function Registerpage() {
       });
       if (response.status === 200){
         alert('register success');
+        fetch('http://localhost:4000/market/user/registermail',{
+              method:'POST',
+              body:JSON.stringify({username,email}),
+              headers:{'Content-Type' : 'application/json'},
+            });
         setRedirect(true);
       } else {
         alert('registration failed');
@@ -27,7 +32,7 @@ export default function Registerpage() {
   }
 
   if (redirect) {
-    return <Navigate to={'/'} />
+    return <Navigate to={'/verifymail'} />
   }
 
   return (

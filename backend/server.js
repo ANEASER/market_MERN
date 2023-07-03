@@ -34,5 +34,7 @@ try { app.listen(PORT, ()=>{
 
 
 const userrouter  = require('./routes/userroutes.js');
+const marketrouter = require('./routes/marketroutes.js')
 
 app.use('/market/user', userrouter);
+app.use('/market/market', marketrouter);
